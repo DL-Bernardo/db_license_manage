@@ -4,7 +4,7 @@ O **Database License Manager** é um módulo de segurança para Odoo 17 desenhad
 
 Diferente de soluções simples baseadas em datas de texto simples, este módulo utiliza **Criptografia Assimétrica (RSA) e JWT (JSON Web Tokens)** para garantir que a licença não possa ser falsificada, alterada ou clonada para outras bases de dados.
 
-## 🚀 Funcionalidades Principais
+## 🚀 Funcionalidades Principais.
 
 *   **Bloqueio por Data de Validade:** Impede o login de utilizadores após a data de expiração definida.
 *   **Vínculo com UUID (Anti-Cópia):** A licença é gerada especificamente para o UUID da base de dados do cliente. Se a base for restaurada noutro servidor, a licença torna-se inválida automaticamente.
