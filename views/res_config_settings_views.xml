@@ -1,0 +1,26 @@
+<!-- db_license_manager/views/res_config_settings_views.xml -->
+<odoo>
+    <record id="res_config_settings_view_form_license" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.license</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Licenciamento" string="Licenciamento" name="license_manager">
+                    <block title="Gestão de Licença" name="license_setting_container">
+                        <setting string="Token de Licença" help="Cole aqui a chave fornecida pelo fornecedor.">
+                            <field name="license_token"/>
+                            <div class="mt16">
+                                <field name="license_status_display" readonly="1" class="oe_inline fw-bold text-primary"/>
+                            </div>
+                            <div class="mt8" invisible="not license_expiration_date">
+                                <span>Válido até: </span>
+                                <field name="license_expiration_date" readonly="1" class="oe_inline"/>
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

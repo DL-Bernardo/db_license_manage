@@ -1,0 +1,1 @@
+Embora o controller já mande a mensagem de erro para o template padrão, podemos personalizar o rodapé do login para mostrar uma mensagem fixa de copyright ou de status.
