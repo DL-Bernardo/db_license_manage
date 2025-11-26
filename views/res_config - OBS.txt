@@ -1,1 +1,0 @@
-A interface para colar a licença.
