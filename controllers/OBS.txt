@@ -1,1 +1,0 @@
-A lógica de intercepção do login.

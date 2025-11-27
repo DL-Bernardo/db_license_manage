@@ -1,3 +1,0 @@
-Importante: Deves substituir a variável PUBLIC_KEY pela tua chave pública real gerada (ver explicação anterior).
-Aqui coloquei uma chave de exemplo apenas 
-para o código não dar erro de sintaxe, mas ela não funcionará com os teus tokens reais até a trocares.

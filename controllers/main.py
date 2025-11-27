@@ -28,7 +28,7 @@ class LicenseLogin(Home):
             token = request.env['ir.config_parameter'].sudo().get_param('db_license_manager.token')
             db_uuid = request.env['ir.config_parameter'].sudo().get_param('database.uuid')
             
-            status, msg, _ = verify_license(token, db_uuid)
+            status, msg, _, _ = verify_license(token, db_uuid)
             
             if status in [LicenseStatus.EXPIRED, LicenseStatus.INVALID]:
                 # Bloqueio: Faz logout forçado
@@ -43,9 +43,21 @@ class LicenseLogin(Home):
             
         except Exception as e:
             # Em caso de erro crítico no código, garantir que admin consegue entrar, mas outros não
+            # Log do erro para debug
+            request.env['ir.logging'].sudo().create({
+                'name': 'License Manager',
+                'type': 'server',
+                'level': 'error',
+                'dbname': request.session.db,
+                'message': f"Erro na verificação de licença: {str(e)}",
+                'path': 'main.py',
+                'func': 'web_login',
+                'line': '0',
+            })
+            
             request.session.logout()
             values = request.params.copy()
-            values['error'] = "Erro interno de validação de licença."
+            values['error'] = "Erro interno de validação de licença. Contacte o suporte."
             return request.render('web.login', values)
 
         return response
