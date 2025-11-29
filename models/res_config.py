@@ -7,7 +7,7 @@ class ResConfigSettings(models.TransientModel):
 
     # O config_parameter guarda o valor na tabela ir_config_parameter automaticamente
     license_token = fields.Char(string="Chave de Licença", config_parameter='db_license_manager.token')
-    public_key = fields.Char(string="Chave Pública RSA", config_parameter='db_license_manager.public_key', groups="base.group_system")
+    public_key = fields.Text(string="Chave Pública RSA", config_parameter='db_license_manager.public_key', groups="base.group_system")
     
     license_status_display = fields.Char(string="Estado da Licença", compute="_compute_license_status")
     license_expiration_date = fields.Date(string="Válido Até", compute="_compute_license_status")

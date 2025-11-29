@@ -1,7 +1,7 @@
 # db_license_manager/__manifest__.py
 {
     'name': 'Database License Manager - DIGITALUB',
-    'version': '17.0.1.0.0',
+    'version': '17.0.1.0.1',
     'category': 'Tools',
     'summary': 'Gestão de Licença de Software com Bloqueio Automático',
     'author': 'Digitalub',
@@ -16,9 +16,5 @@
     'installable': True,
     'application': True,
     'license': 'OPL-1',
-<<<<<<< HEAD
     'images': ['static/description/banner.png'],
-=======
-    'images': ['static/banner.png'],
->>>>>>> 0ee07707ea4a3877778d45d60eb2b16909815a90
 }
