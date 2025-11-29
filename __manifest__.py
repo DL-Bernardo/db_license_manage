@@ -12,9 +12,15 @@
     'data': [
         'views/res_config_settings_views.xml',
         'views/login_templates.xml',
+        'views/login_warning.xml',
     ],
+    'assets': {
+        'web.assets_frontend': [
+            'db_license_manage/static/src/css/login.css',
+        ],
+    },
     'installable': True,
     'application': True,
     'license': 'OPL-1',
-    'images': ['static/description/banner.png'],
+    'images': ['static/description/banner.png']
 }
