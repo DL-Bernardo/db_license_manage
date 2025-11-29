@@ -16,5 +16,9 @@
     'installable': True,
     'application': True,
     'license': 'OPL-1',
+<<<<<<< HEAD
     'images': ['static/description/banner.png'],
+=======
+    'images': ['static/banner.png'],
+>>>>>>> 0ee07707ea4a3877778d45d60eb2b16909815a90
 }
