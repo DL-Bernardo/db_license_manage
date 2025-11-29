@@ -7,7 +7,17 @@ class ResConfigSettings(models.TransientModel):
 
     # O config_parameter guarda o valor na tabela ir_config_parameter automaticamente
     license_token = fields.Char(string="Chave de Licença", config_parameter='db_license_manager.token')
-    public_key = fields.Text(string="Chave Pública RSA", config_parameter='db_license_manager.public_key', groups="base.group_system")
+    public_key = fields.Text(string="Chave Pública RSA", groups="base.group_system")
+    
+    def set_values(self):
+        super(ResConfigSettings, self).set_values()
+        self.env['ir.config_parameter'].sudo().set_param('db_license_manager.public_key', self.public_key)
+
+    @api.model
+    def get_values(self):
+        res = super(ResConfigSettings, self).get_values()
+        res['public_key'] = self.env['ir.config_parameter'].sudo().get_param('db_license_manager.public_key', default='')
+        return res
     
     license_status_display = fields.Char(string="Estado da Licença", compute="_compute_license_status")
     license_expiration_date = fields.Date(string="Válido Até", compute="_compute_license_status")

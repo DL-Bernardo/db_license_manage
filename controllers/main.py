@@ -38,6 +38,13 @@ class LicenseLogin(Home):
                 values = request.params.copy()
                 values['error'] = msg
                 return request.render('web.login', values)
+            elif status == LicenseStatus.WARNING:
+                # Aviso de licença próxima ao vencimento
+                # Não bloqueia o login, apenas exibe mensagem ao usuário
+                values = request.params.copy()
+                # Utiliza a mesma chave 'error' para exibir como aviso (pode ser customizado no template)
+                values['error'] = msg
+                return request.render('web.login', values)
             
             # Se for WARNING, podes adicionar lógica aqui para injetar aviso, mas o login prossegue
             
