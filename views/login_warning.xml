@@ -1,0 +1,21 @@
+<odoo>
+    <!-- Override login template to render flash messages -->
+    <template id="web_login_warning" inherit_id="web.login">
+        <xpath expr="//form" position="before">
+            <t t-if="warning">
+                <div class="alert alert-warning oe_login_flash_msg" role="alert">
+                    <t t-out="warning"/>
+                </div>
+            </t>
+            <t t-if="request.session.get('flash')">
+                <div class="oe_login_flash">
+                    <t t-foreach="request.session.get('flash')" t-as="msg">
+                        <div t-attf-class="alert alert-{{ msg.type }} oe_login_flash_msg">
+                            <t t-esc="msg.message"/>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

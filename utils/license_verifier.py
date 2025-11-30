@@ -24,6 +24,25 @@ def get_public_key():
     # Fallback para script/shell (pode precisar de ajuste dependendo do contexto de chamada)
     return None
 
+def format_public_key(key_str):
+    """
+    Tenta formatar a chave pública para o formato PEM correto.
+    """
+    if not key_str:
+        return None
+        
+    # Remove headers existing if any to normalize
+    key_str = key_str.replace("-----BEGIN PUBLIC KEY-----", "").replace("-----END PUBLIC KEY-----", "")
+    # Remove all whitespace
+    key_str = "".join(key_str.split())
+    
+    formatted_key = "-----BEGIN PUBLIC KEY-----\n"
+    # Chunk by 64 chars
+    for i in range(0, len(key_str), 64):
+        formatted_key += key_str[i:i+64] + "\n"
+    formatted_key += "-----END PUBLIC KEY-----"
+    return formatted_key
+
 def verify_license(token, current_db_uuid):
     """
     Valida o token JWT e o UUID da base de dados.
@@ -36,10 +55,14 @@ def verify_license(token, current_db_uuid):
     if not public_key:
         return LicenseStatus.INVALID, _("Chave Pública não configurada no sistema."), None, None
 
+    # Formata a chave para garantir que está válida (headers, newlines)
+    public_key = format_public_key(public_key)
+
     try:
         # Decodifica usando a Chave Pública
         # O pyjwt valida automaticamente a assinatura e a data 'exp' (expiração)
-        payload = jwt.decode(token, public_key, algorithms=["RS256"])
+        # Adicionamos leeway=60 para tolerar pequenas diferenças de relógio (1 min)
+        payload = jwt.decode(token, public_key, algorithms=["RS256"], leeway=60, options={"verify_iat": False})
         
         # Verifica se a licença pertence a esta base de dados (Anti-Cópia)
         if payload.get('uuid') != current_db_uuid:
@@ -55,7 +78,7 @@ def verify_license(token, current_db_uuid):
 
         days_remaining = (exp_date - datetime.now()).days
 
-        if 0 <= days_remaining <= 15:
+        if 0 <= days_remaining <= 5:
             msg = _("Aviso: A sua licença expira em %s dias.") % days_remaining
             return LicenseStatus.WARNING, msg, exp_date, start_date
 
