@@ -1,7 +1,7 @@
 <odoo>
     <!-- Override login template to render flash messages -->
     <template id="web_login_warning" inherit_id="web.login">
-        <xpath expr="//div[@class='oe_login_error']" position="after">
+        <xpath expr="//form" position="before">
             <t t-if="request.session.get('flash')">
                 <div class="oe_login_flash">
                     <t t-foreach="request.session.get('flash')" t-as="msg">
