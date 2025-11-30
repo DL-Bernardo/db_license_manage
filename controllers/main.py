@@ -40,13 +40,27 @@ class LicenseLogin(Home):
                 return request.render('web.login', values)
             elif status == LicenseStatus.WARNING:
                 # Aviso de licença próxima ao vencimento
-                # Não bloqueia o login, apenas cria flash‑message
-                request.session.setdefault('flash', []).append({
-                    'type': 'warning',
-                    'message': msg,
-                })
-                # Continua o fluxo normal, devolvendo a resposta original
-                return response
+                # Não bloqueia o login, mas precisamos renderizar a página novamente para mostrar o aviso
+                # Se retornarmos 'response' direto, o Odoo redireciona para /web e o usuário não vê o aviso no login
+                
+                # Opção A: Redirecionar para backend e mostrar notificação lá (complexo)
+                # Opção B: Manter na tela de login com aviso e botão "Continuar" (mais seguro)
+                # Opção C: Injetar aviso na sessão e deixar o usuário entrar (o que tentamos, mas o redirect limpa ou ignora)
+
+                # Vamos tentar forçar a renderização da página de login com o aviso, 
+                # mas permitindo que o usuário clique em "Entrar" novamente ou tenha um link para prosseguir.
+                # Porem, como o usuário JÁ está logado (session.uid existe), se renderizarmos o login, 
+                # ele pode ficar confuso.
+                
+                # Melhor abordagem para UX: Deixar entrar e usar o Notification do Odoo (Bus).
+                # Mas como o requisito é na tela de login, o problema é que o 'response' original é um REDIRECT (303).
+                
+                # Se quisermos mostrar na tela de login, temos que INTERROMPER o redirect.
+                values = request.params.copy()
+                # Adicionamos um link para o usuário prosseguir, já que ele está logado
+                msg_with_link = f"{msg} <br/><a href='/web' class='btn btn-sm btn-primary mt-2'>Continuar para o Sistema</a>"
+                values['warning'] = msg_with_link
+                return request.render('web.login', values)
             
             # Se for WARNING, podes adicionar lógica aqui para injetar aviso, mas o login prossegue
             
