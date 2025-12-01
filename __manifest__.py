@@ -5,7 +5,7 @@
     'category': 'Tools',
     'summary': 'Gestão de Licença de Software com Bloqueio Automático',
     'author': 'Digitalub',
-    'depends': ['base', 'web'],
+    'depends': ['base', 'web', 'website', 'auth_signup'],
     'external_dependencies': {
         'python': ['pyjwt', 'cryptography'],
     },
@@ -17,6 +17,10 @@
     'assets': {
         'web.assets_frontend': [
             'db_license_manage/static/src/css/login.css',
+        ],
+        'web.assets_backend': [
+            'db_license_manage/static/src/js/systray_license.js',
+            'db_license_manage/static/src/xml/systray_license.xml',
         ],
     },
     'installable': True,

@@ -10,9 +10,14 @@
                     <block title="Gestão de Licença" name="license_setting_container">
                         <setting string="Token de Licença" help="Cole aqui a chave fornecida pelo fornecedor.">
                             <field name="license_token"/>
-                            <field name="public_key" groups="base.group_system" placeholder="Cole a Chave Pública RSA aqui..."/>
+                            <field name="public_key" groups="base.group_system" placeholder="Cole a Chave Pública RSA aqui..." style="font-family: monospace; font-size: 0.85rem;"/>
                             <div class="mt16">
-                                <field name="license_status_display" readonly="1" class="oe_inline fw-bold text-primary"/>
+                                <field name="license_state" widget="badge" 
+                                    decoration-success="license_state == 'valid'"
+                                    decoration-warning="license_state == 'warning'"
+                                    decoration-danger="license_state in ('expired', 'invalid')"
+                                    class="oe_inline fw-bold"/>
+                                <field name="license_status_display" readonly="1" class="oe_inline ms-2 text-muted"/>
                             </div>
                             <div class="mt8" invisible="not license_expiration_date">
                                 <span>Válido de: </span>

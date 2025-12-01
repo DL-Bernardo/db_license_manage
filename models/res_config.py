@@ -19,7 +19,13 @@ class ResConfigSettings(models.TransientModel):
         res['public_key'] = self.env['ir.config_parameter'].sudo().get_param('db_license_manager.public_key', default='')
         return res
     
-    license_status_display = fields.Char(string="Estado da Licença", compute="_compute_license_status")
+    license_status_display = fields.Char(string="Mensagem", compute="_compute_license_status")
+    license_state = fields.Selection([
+        ('valid', 'Válido'),
+        ('warning', 'Aviso'),
+        ('expired', 'Expirado'),
+        ('invalid', 'Inválido')
+    ], string="Estado", compute="_compute_license_status")
     license_expiration_date = fields.Date(string="Válido Até", compute="_compute_license_status")
     license_start_date = fields.Date(string="Data de Emissão", compute="_compute_license_status")
 
@@ -31,6 +37,7 @@ class ResConfigSettings(models.TransientModel):
             
             status, msg, exp_date, start_date = verify_license(token, db_uuid)
             
-            record.license_status_display = f"[{status.upper()}] {msg}"
+            record.license_state = status
+            record.license_status_display = msg
             record.license_expiration_date = exp_date.date() if exp_date else False
             record.license_start_date = start_date.date() if start_date else False
