@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="db_license_manage.LicenseSystray">
+        <div t-if="state.show" class="o_systray_item" t-att-title="state.message">
+            <a class="dropdown-toggle o-no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-exclamation-triangle text-warning" t-if="state.status == 'warning'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
+                <i class="fa fa-ban text-danger" t-if="state.status != 'warning'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
+                <span class="badge rounded-pill bg-warning text-dark position-absolute top-0 start-100 translate-middle p-1" t-if="state.status == 'warning' and state.days >= 0" style="font-size: 0.6rem;">
+                    <t t-esc="state.days"/>d
+                </span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 300px;">
+                <h5 class="dropdown-header text-uppercase text-danger fw-bold" t-if="state.status != 'warning'">Licença Expirada</h5>
+                <h5 class="dropdown-header text-uppercase text-warning fw-bold" t-if="state.status == 'warning'">Aviso de Licença</h5>
+                <div class="p-2">
+                    <p class="mb-2 text-wrap"><t t-esc="state.message"/></p>
+                    <div class="alert alert-info small mb-0">
+                        Contacte o administrador para renovar a licença.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

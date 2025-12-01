@@ -4,12 +4,43 @@
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     border-radius: 0.5rem;
-    background: linear-gradient(90deg, #ff9a9e, #fad0c4);
-    color: #2c3e50;
     padding: 0.75rem 1rem;
     animation: fadeIn 0.6s ease-out;
 }
+
+.oe_login_flash_msg.alert-danger {
+    background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+    color: #2c3e50;
+    border: none;
+}
+
+.oe_login_flash_msg.alert-warning {
+    background: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+    color: #5d4037;
+    border: none;
+}
+
+/* Override standard Odoo login error to match premium style */
+.oe_login_form .alert-danger {
+    margin-top: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+    color: #2c3e50;
+    border: none;
+    padding: 0.75rem 1rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
