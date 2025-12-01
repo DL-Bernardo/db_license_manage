@@ -1,18 +1,31 @@
 # Odoo Database License Manager (v17)
 
-O **Database License Manager** é um módulo de segurança para Odoo 17 desenhado para proteger a propriedade intelectual e controlar o período de utilização do software.
+O **Database License Manager** é um módulo de segurança avançado para Odoo 17, desenhado para proteger a propriedade intelectual e controlar o período de utilização do software.
 
-Diferente de soluções simples baseadas em datas de texto simples, este módulo utiliza **Criptografia Assimétrica (RSA) e JWT (JSON Web Tokens)** para garantir que a licença não possa ser falsificada, alterada ou clonada para outras bases de dados.
+Diferente de soluções simples baseadas em datas de texto, este módulo utiliza **Criptografia Assimétrica (RSA) e JWT (JSON Web Tokens)** para garantir que a licença não possa ser falsificada, alterada ou clonada para outras bases de dados.
 
 ## 🚀 Funcionalidades Principais
 
+### 🔒 Segurança e Controle
 *   **Bloqueio por Data de Validade:** Impede o login de utilizadores após a data de expiração definida.
 *   **Vínculo com UUID (Anti-Cópia):** A licença é gerada especificamente para o UUID da base de dados do cliente. Se a base for restaurada noutro servidor, a licença torna-se inválida automaticamente.
 *   **Segurança RSA 2048-bit:** Utiliza uma chave privada (na posse do fornecedor) para assinar licenças e uma chave pública (configurada no módulo) para validação.
-*   **Configuração Dinâmica:** A chave pública é configurada diretamente na interface do Odoo, sem necessidade de alterar código.
-*   **Visualização Completa:** Exibe a data de início (emissão) e fim (validade) da licença.
 *   **Admin Bypass (Fail-Safe):** Administradores (ID 1, ID 2 e Superusers) mantêm acesso ao sistema mesmo com a licença expirada, permitindo a renovação do token via interface.
-*   **Período de Graça (Grace Period):** Sistema preparado para emitir avisos visuais (Warnings) 15 dias antes da expiração.
+
+### ⚠️ Sistema de Avisos e Notificações (Novo)
+*   **Aviso de Login (Grace Period):** 5 dias antes da expiração, os utilizadores veem um banner de aviso na tela de login.
+    *   O login **não é bloqueado** durante este período.
+    *   Um botão **"Continuar para o Sistema"** permite o acesso normal.
+    *   Visual "Premium" com gradientes (Laranja para aviso, Vermelho para crítico).
+*   **Notificação Persistente (Systray):** Um ícone de alerta no topo da tela (backend) exibe a contagem regressiva de dias restantes.
+*   **E-mails Automáticos:** O sistema envia e-mails automáticos para os administradores quando a licença está prestes a expirar.
+    *   **Cronograma:** 15, 7, 5, 3, 1 e 0 dias antes da expiração.
+    *   **Template:** E-mail HTML formatado com cores de alerta.
+
+### ⚙️ Interface de Gestão
+*   **Configuração Dinâmica:** A chave pública e o token são configurados diretamente em *Definições > Licenciamento*.
+*   **Status Visual:** Badges coloridos (Válido, Aviso, Expirado) para fácil identificação do estado da licença.
+*   **Validação em Tempo Real:** Ao colar o token, o sistema exibe imediatamente as datas de validade.
 
 ---
 
@@ -24,11 +37,14 @@ Este módulo depende de bibliotecas Python de criptografia padrão. Certifique-s
 pip install pyjwt cryptography
 ```
 
+---
+
 ## ⚙️ Instalação e Configuração (Cliente)
 
 ### 1. Instalação
 1.  Coloque a pasta `db_license_manager` no diretório de `custom_addons`.
 2.  Atualize a lista de aplicações e instale o módulo.
+    *   *Nota:* O módulo instalará automaticamente as dependências `web`, `website`, `auth_signup` e `mail` se necessário.
 
 ### 2. Configuração Inicial (Obrigatório)
 Assim que o módulo for instalado, **nenhum usuário conseguirá logar** (exceto Admin) até que a Chave Pública seja configurada.
@@ -42,7 +58,7 @@ Assim que o módulo for instalado, **nenhum usuário conseguirá logar** (exceto
 1.  Ainda em **Definições > Licenciamento**.
 2.  No campo **"Token de Licença"**, cole a string fornecida pelo seu fornecedor de software.
 3.  O sistema validará imediatamente a assinatura e mostrará:
-    *   Estado da Licença (Válido/Inválido/Expirado)
+    *   Estado da Licença (Badge Colorido)
     *   Data de Início (Válido de...)
     *   Data de Fim (...até)
 
@@ -86,6 +102,7 @@ def create_token(client_name, db_uuid, days):
         'exp': now + datetime.timedelta(days=days), # Data de Expiração
         'iat': now # Data de Emissão (Início)
     }
+    # Opcional: Adicionar 'verify_iat': False no decode se houver problemas de fuso horário
     return jwt.encode(payload, PRIVATE_KEY, algorithm="RS256")
 
 # Exemplo de uso:
@@ -111,10 +128,12 @@ Envie ao cliente:
     *   **Se SIM:** Acesso permitido.
     *   **Se NÃO:** O módulo lê o Token de Licença e a Chave Pública do sistema.
 4.  **Validação do Token:**
-    *   A assinatura RSA é válida com a chave pública configurada?
-    *   A data atual é menor que a data de expiração?
-    *   O UUID do token corresponde ao UUID da base de dados atual?
-5.  **Resultado:** Se qualquer verificação falhar, o utilizador é desconectado forçadamente e uma mensagem de erro é exibida.
+    *   A assinatura RSA é válida?
+    *   O UUID corresponde?
+    *   **Status WARNING (<= 5 dias):** Exibe aviso na tela de login, mas permite continuar.
+    *   **Status EXPIRED/INVALID:** Bloqueia o login e exibe erro.
+5.  **Notificações:**
+    *   Cron job diário verifica a validade e envia e-mails para o grupo `base.group_system`.
 
 ---
 
@@ -124,10 +143,13 @@ Envie ao cliente:
     Ao restaurar um backup numa nova instância, o UUID da base de dados muda. O cliente deve solicitar uma nova licença fornecendo o novo UUID.
 
 *   **Não consigo entrar para renovar a licença:**
-    Aceda com a conta de Administrador original (geralmente `admin` ou ID 2). Estas contas têm imunidade ao bloqueio para permitir a manutenção do sistema.
+    Aceda com a conta de Administrador original (geralmente `admin` ou ID 2). Estas contas têm imunidade ao bloqueio.
 
-*   **Erro "Chave Pública não configurada":**
-    O administrador deve logar e configurar a chave pública em *Definições > Licenciamento*.
+*   **Erro "Uncaught Promise > license_token field is undefined":**
+    Certifique-se de reiniciar o servidor Odoo após atualizar o módulo. Este erro ocorre quando há dessincronização entre o modelo Python e a View JS.
+
+*   **E-mails não chegam:**
+    Verifique se o servidor de saída (SMTP) está configurado em *Definições > Técnico > Servidores de E-mail*. Verifique também se a Ação Agendada "License Manager: Check Expiration" está ativa.
 
 ---
 
