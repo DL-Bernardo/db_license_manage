@@ -3,13 +3,9 @@
     'name': 'Database License Manager - DIGITALUB',
     'version': '17.0.1.0.1',
     'category': 'Tools',
-    'summary': 'Gestão de Licença de Software com Bloqueio Automático',
+    'summary': 'Software License Management with Automatic Blocking',
     'author': 'Digitalub',
-<<<<<<< HEAD
-    'depends': ['base', 'web', 'auth_signup', 'mail'],
-=======
     'depends': ['base', 'web', 'website', 'auth_signup', 'mail'],
->>>>>>> e3d7358826008ff0f97c0789d2aac03e9fadd3f4
     'external_dependencies': {
         'python': ['pyjwt', 'cryptography'],
     },
@@ -32,10 +28,7 @@
     'installable': True,
     'application': True,
     'license': 'OPL-1',
-<<<<<<< HEAD
     'price': 385,
     'currency': 'USD',
-=======
->>>>>>> e3d7358826008ff0f97c0789d2aac03e9fadd3f4
     'images': ['static/description/banner.png']
 }
