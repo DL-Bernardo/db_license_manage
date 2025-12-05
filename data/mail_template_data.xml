@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_license_expiry" model="mail.template">
+            <field name="name">License Expiration Warning</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="subject">Aviso Importante: Sua Licença Odoo Expira em {{ ctx.get('days_remaining') }} dias</field>
+            <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.email_formatted }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Olá <t t-out="ctx.get('user_name')"/>,
+                        <br/><br/>
+                        Este é um aviso automático sobre a licença do seu sistema Odoo.
+                        <br/><br/>
+                        <strong>Estado:</strong> <t t-out="ctx.get('license_status').upper()"/>
+                        <br/>
+                        <strong>Mensagem:</strong> <t t-out="ctx.get('license_msg')"/>
+                        <br/><br/>
+                        <t t-if="ctx.get('days_remaining') &lt;= 0">
+                            <span style="color: #dc3545; font-weight: bold;">Sua licença expirou ou expira hoje! Por favor, contacte o suporte imediatamente para evitar bloqueios.</span>
+                        </t>
+                        <t t-else="">
+                            <span style="color: #ffc107; font-weight: bold;">Restam apenas <t t-out="ctx.get('days_remaining')"/> dias.</span>
+                        </t>
+                        <br/><br/>
+                        Por favor, entre em contacto com o administrador do sistema ou o seu fornecedor para renovar a licença.
+                        <br/><br/>
+                        Atenciosamente,
+                        <br/>
+                        Seu Sistema Odoo
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

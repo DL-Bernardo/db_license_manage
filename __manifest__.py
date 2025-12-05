@@ -5,11 +5,13 @@
     'category': 'Tools',
     'summary': 'Gestão de Licença de Software com Bloqueio Automático',
     'author': 'Digitalub',
-    'depends': ['base', 'web', 'auth_signup'],
+    'depends': ['base', 'web', 'auth_signup', 'mail'],
     'external_dependencies': {
         'python': ['pyjwt', 'cryptography'],
     },
     'data': [
+        'data/mail_template_data.xml',
+        'data/ir_cron_data.xml',
         'views/res_config_settings_views.xml',
         'views/login_templates.xml',
         'views/login_warning.xml',
