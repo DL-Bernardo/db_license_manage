@@ -28,5 +28,7 @@
     'installable': True,
     'application': True,
     'license': 'OPL-1',
+    'price': 385,
+    'currency': 'USD',
     'images': ['static/description/banner.png']
 }
