@@ -6,11 +6,11 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <app data-string="Licenciamento" string="Licenciamento" name="license_manager">
-                    <block title="Gestão de Licença" name="license_setting_container">
-                        <setting string="Token de Licença" help="Cole aqui a chave fornecida pelo fornecedor.">
+                <app data-string="Licensing" string="Licensing" name="license_manager">
+                    <block title="License Management" name="license_setting_container">
+                        <setting string="License Token" help="Paste the key provided by the supplier here.">
                             <field name="license_token"/>
-                            <field name="public_key" groups="base.group_system" placeholder="Cole a Chave Pública RSA aqui..." style="font-family: monospace; font-size: 0.85rem;"/>
+                            <field name="public_key" groups="base.group_system" placeholder="Paste the RSA Public Key here..." style="font-family: monospace; font-size: 0.85rem;"/>
                             <div class="mt16">
                                 <field name="license_state" widget="badge" 
                                     decoration-success="license_state == 'valid'"
@@ -20,9 +20,9 @@
                                 <field name="license_status_display" readonly="1" class="oe_inline ms-2 text-muted"/>
                             </div>
                             <div class="mt8" invisible="not license_expiration_date">
-                                <span>Válido de: </span>
+                                <span>Valid from: </span>
                                 <field name="license_start_date" readonly="1" class="oe_inline"/>
-                                <span class="mx-2">até</span>
+                                <span class="mx-2">until</span>
                                 <field name="license_expiration_date" readonly="1" class="oe_inline"/>
                             </div>
                         </setting>

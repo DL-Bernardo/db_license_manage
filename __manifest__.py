@@ -3,7 +3,7 @@
     'name': 'Database License Manager - DIGITALUB',
     'version': '17.0.1.0.1',
     'category': 'Tools',
-    'summary': 'Gestão de Licença de Software com Bloqueio Automático',
+    'summary': 'Software License Management with Automatic Blocking',
     'author': 'Digitalub',
     'depends': ['base', 'web', 'website', 'auth_signup', 'mail'],
     'external_dependencies': {
@@ -28,5 +28,7 @@
     'installable': True,
     'application': True,
     'license': 'OPL-1',
+    'price': 385,
+    'currency': 'USD',
     'images': ['static/description/banner.png']
 }
