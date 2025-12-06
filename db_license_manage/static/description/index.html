@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<<<<<<< HEAD
 <html lang="en">
-=======
-<html lang="pt">
->>>>>>> e3d7358826008ff0f97c0789d2aac03e9fadd3f4
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -102,9 +98,8 @@
         <img src="icon.png" alt="Logo" style="width: 100px; height: auto;">
     </div>
 
-    <h1>Odoo Database License Manager (v17)</h1>
+    <h1>Digitalub Angola - Odoo Database License Manager (v17)</h1>
 
-<<<<<<< HEAD
     <p>The <strong>Database License Manager</strong> is a security module for Odoo 17 designed to protect intellectual property and control the software's usage period.</p>
 
     <p>Unlike simple solutions based on plain text dates, this module uses <strong>Asymmetric Cryptography (RSA) and JWT (JSON Web Tokens)</strong> to ensure that the license cannot be forged, altered, or cloned for other databases.</p>
@@ -154,62 +149,10 @@
                 <li>License Status (Valid/Invalid/Expired)</li>
                 <li>Start Date (Valid from...)</li>
                 <li>End Date (...to)</li>
-=======
-    <p>O <strong>Database License Manager</strong> é um módulo de segurança para Odoo 17 desenhado para proteger a propriedade intelectual e controlar o período de utilização do software.</p>
-
-    <p>Diferente de soluções simples baseadas em datas de texto simples, este módulo utiliza <strong>Criptografia Assimétrica (RSA) e JWT (JSON Web Tokens)</strong> para garantir que a licença não possa ser falsificada, alterada ou clonada para outras bases de dados.</p>
-
-    <div class="alert alert-info">
-        <strong>Nota:</strong> Este módulo requer a instalação de bibliotecas Python adicionais (pyjwt, cryptography).
-    </div>
-
-    <h2>🚀 Funcionalidades Principais</h2>
-    <ul>
-        <li><strong>Bloqueio por Data de Validade:</strong> Impede o login de utilizadores após a data de expiração definida.</li>
-        <li><strong>Vínculo com UUID (Anti-Cópia):</strong> A licença é gerada especificamente para o UUID da base de dados do cliente. Se a base for restaurada noutro servidor, a licença torna-se inválida automaticamente.</li>
-        <li><strong>Segurança RSA 2048-bit:</strong> Utiliza uma chave privada (na posse do fornecedor) para assinar licenças e uma chave pública (configurada no módulo) para validação.</li>
-        <li><strong>Configuração Dinâmica:</strong> A chave pública é configurada diretamente na interface do Odoo, sem necessidade de alterar código.</li>
-        <li><strong>Visualização Completa:</strong> Exibe a data de início (emissão) e fim (validade) da licença.</li>
-        <li><strong>Admin Bypass (Fail-Safe):</strong> Administradores (ID 1, ID 2 e Superusers) mantêm acesso ao sistema mesmo com a licença expirada, permitindo a renovação do token via interface.</li>
-        <li><strong>Período de Graça (Grace Period):</strong> Sistema preparado para emitir avisos visuais (Warnings) 15 dias antes da expiração.</li>
-    </ul>
-
-    <h2>🛠️ Pré-requisitos Técnicos</h2>
-    <p>Este módulo depende de bibliotecas Python de criptografia padrão. Certifique-se de que estão instaladas no ambiente do servidor Odoo:</p>
-    <pre><code>pip install pyjwt cryptography</code></pre>
-
-    <h2>⚙️ Instalação e Configuração (Cliente)</h2>
-
-    <h3>1. Instalação</h3>
-    <ol>
-        <li>Coloque a pasta <code>db_license_manager</code> no diretório de <code>custom_addons</code>.</li>
-        <li>Atualize a lista de aplicações e instale o módulo.</li>
-    </ol>
-
-    <h3>2. Configuração Inicial (Obrigatório)</h3>
-    <p>Assim que o módulo for instalado, <strong>nenhum usuário conseguirá logar</strong> (exceto Admin) até que a Chave Pública seja configurada.</p>
-    <ol>
-        <li>Aceda com conta de Administrador.</li>
-        <li>Vá para <strong>Definições (Settings) &gt; Licenciamento</strong>.</li>
-        <li>No campo <strong>"Chave Pública RSA"</strong>, cole o conteúdo do seu ficheiro <code>public_key.pem</code>.</li>
-        <li>Salve as definições.</li>
-    </ol>
-
-    <h3>3. Inserir a Licença</h3>
-    <ol>
-        <li>Ainda em <strong>Definições &gt; Licenciamento</strong>.</li>
-        <li>No campo <strong>"Token de Licença"</strong>, cole a string fornecida pelo seu fornecedor de software.</li>
-        <li>O sistema validará imediatamente a assinatura e mostrará:
-            <ul>
-                <li>Estado da Licença (Válido/Inválido/Expirado)</li>
-                <li>Data de Início (Válido de...)</li>
-                <li>Data de Fim (...até)</li>
->>>>>>> e3d7358826008ff0f97c0789d2aac03e9fadd3f4
             </ul>
         </li>
     </ol>
 
-<<<<<<< HEAD
     <h2>🛡️ Security Flow</h2>
     <ol>
         <li><strong>Login Attempt:</strong> The user enters their credentials.</li>
@@ -233,75 +176,8 @@
     <div class="footer">
         <p><strong>Developed by:</strong> DIGITALUB - ANGOLA</p>
         <p><strong>License:</strong> OPL-1 (Digitalub Proprietary License)</p>
-=======
-    <h2>🔐 Guia do Desenvolvedor (Fornecedor)</h2>
-
-    <h3>1. Geração das Chaves RSA</h3>
-    <p>Antes de distribuir o módulo, você deve gerar um par de chaves RSA. Guarde a <strong>Chave Privada</strong> em segurança e nunca a partilhe. A <strong>Chave Pública</strong> será configurada no Odoo do cliente.</p>
-    <pre><code># Gerar Chave Privada
-openssl genrsa -out private_key.pem 2048
-
-# Gerar Chave Pública (Extraída da Privada)
-openssl rsa -in private_key.pem -pubout -out public_key.pem</code></pre>
-
-    <h3>2. Gerar uma Licença para um Cliente</h3>
-    <p>Utilize o script Python abaixo (execute localmente na sua máquina) para criar o token que enviará ao cliente. <strong>Não inclua este script no módulo do cliente.</strong></p>
-
-    <pre><code>import jwt
-import datetime
-
-# COLE A SUA CHAVE PRIVADA AQUI
-PRIVATE_KEY = """-----BEGIN RSA PRIVATE KEY-----
-...conteúdo do private_key.pem...
------END RSA PRIVATE KEY-----"""
-
-def create_token(client_name, db_uuid, days):
-    now = datetime.datetime.now()
-    payload = {
-        'iss': 'OdooVendor',
-        'sub': client_name,
-        'uuid': db_uuid,  # UUID obtido em Configurações > Técnico > Parâmetros de Sistema
-        'exp': now + datetime.timedelta(days=days), # Data de Expiração
-        'iat': now # Data de Emissão (Início)
-    }
-    return jwt.encode(payload, PRIVATE_KEY, algorithm="RS256")
-
-# Exemplo de uso:
-# 1. Peça ao cliente o UUID da base de dados dele.
-# 2. Gere o token:
-# token = create_token("Cliente Exemplo Lda", "uuid-da-base-de-dados-cliente", 365)
-# print(token)</code></pre>
-
-    <h2>🛡️ Fluxo de Segurança</h2>
-    <ol>
-        <li><strong>Tentativa de Login:</strong> O utilizador insere as credenciais.</li>
-        <li><strong>Verificação de Utilizador:</strong> O Odoo valida a senha.</li>
-        <li><strong>Interceptação:</strong> O módulo verifica se o utilizador é Admin.
-            <ul>
-                <li><strong>Se SIM:</strong> Acesso permitido.</li>
-                <li><strong>Se NÃO:</strong> O módulo lê o Token de Licença e a Chave Pública do sistema.</li>
-            </ul>
-        </li>
-        <li><strong>Validação do Token:</strong>
-            <ul>
-                <li>A assinatura RSA é válida com a chave pública configurada?</li>
-                <li>A data atual é menor que a data de expiração?</li>
-                <li>O UUID do token corresponde ao UUID da base de dados atual?</li>
-            </ul>
-        </li>
-        <li><strong>Resultado:</strong> Se qualquer verificação falhar, o utilizador é desconectado forçadamente e uma mensagem de erro é exibida.</li>
-    </ol>
-
-    <div class="footer">
-        <p><strong>Desenvolvido por:</strong> DIGITALUB - ANGOLA</p>
-        <p><strong>Licença:</strong> OPL-1 (Digitalub Proprietary License)</p>
->>>>>>> e3d7358826008ff0f97c0789d2aac03e9fadd3f4
     </div>
 </div>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> e3d7358826008ff0f97c0789d2aac03e9fadd3f4
