@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odoo Database License Manager</title>
+    <title>Database License Manager</title>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -108,7 +108,7 @@
         <strong>Note:</strong> This module requires the installation of additional Python libraries (pyjwt, cryptography).
     </div>
 
-    <h2>🚀 Key Features</h2>
+    <h2>Key Features</h2>
     <ul>
         <li><strong>Expiration Date Lock:</strong> Prevents users from logging in after the defined expiration date.</li>
         <li><strong>UUID Binding (Anti-Copy):</strong> The license is generated specifically for the client's database UUID. If the database is restored on another server, the license automatically becomes invalid.</li>
@@ -119,11 +119,11 @@
         <li><strong>Grace Period:</strong> The system is prepared to issue visual warnings (Warnings) 15 days before expiration.</li>
     </ul>
 
-    <h2>🛠️ Technical Prerequisites</h2>
+    <h2>Technical Prerequisites</h2>
     <p>This module depends on standard Python cryptography libraries. Make sure they are installed in the Odoo server environment:</p>
     <pre><code>pip install pyjwt cryptography</code></pre>
 
-    <h2>⚙️ Installation and Configuration (Client)</h2>
+    <h2>Installation and Configuration (Client)</h2>
 
     <h3>1. Installation</h3>
     <ol>
@@ -153,7 +153,7 @@
         </li>
     </ol>
 
-    <h2>🛡️ Security Flow</h2>
+    <h2>Security Flow</h2>
     <ol>
         <li><strong>Login Attempt:</strong> The user enters their credentials.</li>
         <li><strong>User Verification:</strong> Odoo validates the password.</li>
@@ -176,6 +176,41 @@
     <div class="footer">
         <p><strong>Developed by:</strong> DIGITALUB - ANGOLA</p>
         <p><strong>License:</strong> OPL-1 (Digitalub Proprietary License)</p>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="oe_slogan" style="color:#875A7B;">Visual Demonstration</h2>
+        </div>
+        <div class="col-md-6">
+            <label for="">License not found or invalid</label>
+            <p>When the license is not found or is invalid, the user (except the administrator) is prevented from logging in..</p>
+            <img src="/db_license_manage/static/description/01.licenca_nao_encontrada.png" class="img-fluid" alt="Licença não encontrada">
+        </div>
+        <div class="col-md-6">
+            <label for="">License Configuration</label>
+            <p>The administrator can configure the public key and license token in the settings..</p>
+            <img src="/db_license_manage/static/description/02.configurar_licenca.png" class="img-fluid" alt="Configurar licença">
+        </div>
+        <div class="col-md-6">
+            <label for="">Valid License</label>
+            <p>With a valid license, the system displays the license information and access is granted..</p>
+            <img src="/db_license_manage/static/description/03.licenca_valida.png" class="img-fluid" alt="Licença válida">
+        </div>
+        <div class="col-md-6">
+            <label for="">Expiration Notice</label>
+            <p>A warning is displayed in the days leading up to the license expiration..</p>
+            <img src="/db_license_manage/static/description/05.Aviso_5_dias_licenca.png" class="img-fluid" alt="Aviso de 5 dias">
+        </div>
+        <div class="col-md-6">
+            <label for="">Expiration Notice</label>
+            <p>A warning is displayed in the days leading up to the license expiration..</p>
+            <img src="/db_license_manage/static/description/04.Aviso_5_dias_licenca1.png" class="img-fluid" alt="Aviso de 5 dias">
+        </div>
+        <div class="col-md-6">
+            <label for="">License Expired</label>
+            <p>After expiration, access is blocked for all users except the administrator..</p>
+            <img src="/db_license_manage/static/description/06.Licenca_expirada.png" class="img-fluid" alt="Licença expirada">
+        </div>
     </div>
 </div>
 
