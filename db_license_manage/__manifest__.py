@@ -1,8 +1,8 @@
 {
-    'name': 'Database License Manager - DIGITALUB',
-    'version': '17.0.1.0.1',
+    'name': 'Database License & Anti-Copy Protection Manager',
+    'version': '17.0.1.0.2',
     'category': 'Tools',
-    'summary': 'Software License Management with Automatic Blocking',
+    'summary': 'Software License Management with UUID Locking, Anti-Copy Protection & Secure Expiration Controls',
     'author': 'DIGITALUB ANGOLA',
     'depends': ['base', 'web', 'website', 'auth_signup', 'mail'],
     'external_dependencies': {
@@ -27,8 +27,8 @@
     'installable': True,
     'application': True,
     'license': 'OPL-1',
-    'price': 400,
-    'currency': 'USD',
+    'price': 275.0,
+    'currency': 'EUR',
     'images': [
         'static/description/banner.png',
         'static/description/01.licenca_nao_encontrada.png',
