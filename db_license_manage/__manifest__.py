@@ -1,6 +1,6 @@
 {
     'name': 'Database License & Anti-Copy Protection Manager',
-    'version': '17.0.1.0.5',
+    'version': '17.0.1.0.6',
     'category': 'Tools',
     'summary': 'Software License Management with UUID Locking, Anti-Copy Protection & Secure Expiration Controls',
     'author': 'DIGITALUB ANGOLA',
@@ -28,7 +28,7 @@
     'application': True,
     'license': 'OPL-1',
     'price': 349.0,
-    'currency': 'EUR',
+    'currency': 'USD',
     'images': [
         'static/description/banner.png',
         'static/description/01.licenca_nao_encontrada.png',
