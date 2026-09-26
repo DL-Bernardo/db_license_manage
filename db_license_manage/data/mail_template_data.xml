@@ -4,25 +4,25 @@
         <record id="email_template_license_expiry" model="mail.template">
             <field name="name">License Expiration Warning</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="subject">Important Notice: Your Odoo License Expires in {{ ctx.get('days_remaining') }} days</field>
+            <field name="subject">Important Notice: Your Odoo License Expires in {{ ctx.get('days_remaining') or 0 }} days</field>
             <field name="email_from">{{ (object.company_id.email or user.email_formatted) }}</field>
             <field name="email_to">{{ object.email_formatted }}</field>
             <field name="body_html" type="html">
                 <div style="margin: 0px; padding: 0px;">
                     <p style="margin: 0px; padding: 0px; font-size: 13px;">
-                        Hello <t t-out="ctx.get('user_name')"/>,
+                        Hello <t t-out="ctx.get('user_name') or 'User'"/>,
                         <br/><br/>
                         This is an automated notification regarding your Odoo system license.
                         <br/><br/>
-                        <strong>Status:</strong> <t t-out="ctx.get('license_status').upper()"/>
+                        <strong>Status:</strong> <t t-out="(ctx.get('license_status') or 'UNKNOWN').upper()"/>
                         <br/>
-                        <strong>Message:</strong> <t t-out="ctx.get('license_msg')"/>
+                        <strong>Message:</strong> <t t-out="ctx.get('license_msg') or ''"/>
                         <br/><br/>
-                        <t t-if="ctx.get('days_remaining') &lt;= 0">
+                        <t t-if="(ctx.get('days_remaining') or 0) &lt;= 0">
                             <span style="color: #dc3545; font-weight: bold;">Your license has expired or expires today! Please contact support immediately to avoid service interruption.</span>
                         </t>
                         <t t-else="">
-                            <span style="color: #ffc107; font-weight: bold;">Only <t t-out="ctx.get('days_remaining')"/> days remaining.</span>
+                            <span style="color: #ffc107; font-weight: bold;">Only <t t-out="ctx.get('days_remaining') or 0"/> days remaining.</span>
                         </t>
                         <br/><br/>
                         Please contact your system administrator or software provider to renew your license.
