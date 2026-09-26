@@ -2,7 +2,7 @@
     'name': 'Database License & Anti-Copy Protection Manager',
     'version': '19.0.1.0.0',
     'category': 'Tools',
-    'summary': 'Software License Management with UUID Locking, Anti-Copy Protection & Secure Expiration Controls',
+    'summary': 'Software License Management with UUID Locking, Anti-Copy Protection, Session Control & Email Alerts',
     'author': 'DIGITALUB ANGOLA',
     'depends': ['base', 'web', 'auth_signup', 'mail'],
     'external_dependencies': {
@@ -14,6 +14,7 @@
         'views/res_config_settings_views.xml',
         'views/login_templates.xml',
         'views/login_warning.xml',
+        'views/license_expired_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [

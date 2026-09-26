@@ -2,16 +2,31 @@
 <odoo>
     <template id="login_layout_license_footer" inherit_id="web.login_layout">
         <xpath expr="//div[hasclass('card-body')]" position="after">
-            <div class="text-center text-muted small mt-3">
-                <t t-if="license_login_status and license_login_status.get('show')">
-                    <div class="mb-2">
-                        <span t-attf-class="badge rounded-pill bg-{{ license_login_status['type'] }} text-{{ 'dark' if license_login_status['type'] == 'warning' else 'white' }} px-3 py-1 shadow-sm">
-                            <i t-attf-class="fa {{ license_login_status['icon'] }} me-1"></i>
-                            <t t-esc="license_login_status['title']"/>: <t t-esc="license_login_status['message']"/>
-                        </span>
+            <div class="text-center mt-3 px-4">
+                <t t-if="license_status">
+                    <div class="d-inline-flex align-items-center gap-2 py-1 px-3 rounded-pill border shadow-sm" 
+                         t-attf-style="background-color: {{ 'rgba(40, 167, 69, 0.08)' if license_status == 'valid' else 'rgba(245, 124, 0, 0.08)' if license_status == 'warning' else 'rgba(211, 47, 47, 0.08)' }}; 
+                                       border-color: {{ 'rgba(40, 167, 69, 0.18)' if license_status == 'valid' else 'rgba(245, 124, 0, 0.18)' if license_status == 'warning' else 'rgba(211, 47, 47, 0.18)' }}; 
+                                       color: {{ '#1b5e20' if license_status == 'valid' else '#e65100' if license_status == 'warning' else '#b71c1c' }}; 
+                                       font-size: 0.8rem; font-weight: 500; font-family: sans-serif;">
+                        
+                        <t t-if="license_status == 'valid'">
+                            <i class="fa fa-shield me-1"></i>
+                            <span>License Valid until <t t-esc="license_expiry_date"/></span>
+                        </t>
+                        <t t-elif="license_status == 'warning'">
+                            <i class="fa fa-exclamation-triangle me-1"></i>
+                            <span>License expires on <t t-esc="license_expiry_date"/></span>
+                        </t>
+                        <t t-else="">
+                            <i class="fa fa-ban me-1"></i>
+                            <span>License Expired or Invalid</span>
+                        </t>
                     </div>
                 </t>
-                <div>Software protected by DbLicenseManager.</div>
+                <div class="text-muted mt-2" style="font-size: 0.72rem; letter-spacing: 0.5px;">
+                    Software protected by <strong>Digitalub Angola</strong>.
+                </div>
             </div>
         </xpath>
     </template>
