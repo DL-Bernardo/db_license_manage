@@ -3,7 +3,15 @@
     <template id="login_layout_license_footer" inherit_id="web.login_layout">
         <xpath expr="//div[hasclass('card-body')]" position="after">
             <div class="text-center text-muted small mt-3">
-                Software protected by DbLicenseManager.
+                <t t-if="license_login_status and license_login_status.get('show')">
+                    <div class="mb-2">
+                        <span t-attf-class="badge rounded-pill bg-{{ license_login_status['type'] }} text-{{ 'dark' if license_login_status['type'] == 'warning' else 'white' }} px-3 py-1 shadow-sm">
+                            <i t-attf-class="fa {{ license_login_status['icon'] }} me-1"></i>
+                            <t t-esc="license_login_status['title']"/>: <t t-esc="license_login_status['message']"/>
+                        </span>
+                    </div>
+                </t>
+                <div>Software protected by DbLicenseManager.</div>
             </div>
         </xpath>
     </template>

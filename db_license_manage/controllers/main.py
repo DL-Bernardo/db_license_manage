@@ -34,6 +34,7 @@ class LicenseLogin(Home):
                         'icon': 'fa-ban',
                         'title': 'License Status' if status == LicenseStatus.INVALID else 'License Expired',
                         'message': msg,
+                        'state': status,
                     }
                 elif status == LicenseStatus.WARNING:
                     response.qcontext['license_login_status'] = {
@@ -42,6 +43,16 @@ class LicenseLogin(Home):
                         'icon': 'fa-exclamation-triangle',
                         'title': 'License Warning',
                         'message': msg,
+                        'state': status,
+                    }
+                elif status == LicenseStatus.VALID:
+                    response.qcontext['license_login_status'] = {
+                        'show': True,
+                        'type': 'success',
+                        'icon': 'fa-check-circle',
+                        'title': 'License Active',
+                        'message': msg,
+                        'state': status,
                     }
             except Exception as e:
                 _logger.warning("Error checking license on login GET: %s", e)
