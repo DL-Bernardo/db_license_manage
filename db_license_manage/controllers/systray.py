@@ -6,7 +6,7 @@ from ..utils.license_verifier import verify_license, LicenseStatus
 
 class LicenseSystrayController(http.Controller):
 
-    @http.route('/db_license_manage/status', type='json', auth='user')
+    @http.route('/db_license_manage/status', type='jsonrpc', auth='user')
     def get_license_status(self):
         token = request.env['ir.config_parameter'].sudo().get_param('db_license_manager.token')
         db_uuid = request.env['ir.config_parameter'].sudo().get_param('database.uuid')
