@@ -1,6 +1,6 @@
 {
     'name': 'Database License & Anti-Copy Protection Manager',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'category': 'Tools',
     'summary': 'Software License Management with UUID Locking, Anti-Copy Protection & Secure Expiration Controls',
     'author': 'DIGITALUB ANGOLA',
