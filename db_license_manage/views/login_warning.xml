@@ -1,16 +1,23 @@
 <odoo>
-    <!-- Override login template to render flash messages -->
+    <!-- Override login template to render license status banner and flash messages -->
     <template id="web_login_warning" inherit_id="web.login">
         <xpath expr="//form" position="before">
+            <t t-if="license_login_status and license_login_status.get('show')">
+                <div t-attf-class="alert alert-{{ license_login_status['type'] }} text-center mb-3 py-2 rounded-3 shadow-sm" role="alert" style="font-size: 0.88rem;">
+                    <i t-attf-class="fa {{ license_login_status['icon'] }} me-1"></i>
+                    <strong><t t-esc="license_login_status['title']"/>:</strong>
+                    <span class="d-block mt-1"><t t-esc="license_login_status['message']"/></span>
+                </div>
+            </t>
             <t t-if="warning">
-                <div class="alert alert-warning oe_login_flash_msg" role="alert">
+                <div class="alert alert-warning oe_login_flash_msg text-center" role="alert">
                     <t t-out="warning"/>
                 </div>
             </t>
             <t t-if="request.session.get('flash')">
                 <div class="oe_login_flash">
                     <t t-foreach="request.session.get('flash')" t-as="msg">
-                        <div t-attf-class="alert alert-{{ msg.type }} oe_login_flash_msg">
+                        <div t-attf-class="alert alert-{{ msg.type }} oe_login_flash_msg text-center">
                             <t t-esc="msg.message"/>
                         </div>
                     </t>
