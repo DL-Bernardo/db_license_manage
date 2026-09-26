@@ -2,22 +2,75 @@
 <templates xml:space="preserve">
     <t t-name="db_license_manage.LicenseSystray">
         <div class="o_systray_item" t-att-title="state.message" t-att-class="{ 'd-none': !state.show }">
-            <a class="dropdown-toggle o-no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-exclamation-triangle text-warning" t-if="state.status == 'warning'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
-                <i class="fa fa-ban text-danger" t-if="state.status != 'warning'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
-                <span class="badge rounded-pill bg-warning text-dark position-absolute top-0 start-100 translate-middle p-1" t-if="state.status == 'warning' and state.days >= 0" style="font-size: 0.6rem;">
-                    <t t-esc="state.days"/>d
+            <a class="dropdown-toggle o-no-caret d-flex align-items-center position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 100%;">
+                <!-- Icon based on status -->
+                <i class="fa fa-shield text-success" t-if="state.status == 'valid'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
+                <i class="fa fa-exclamation-triangle text-warning animate-pulse" t-if="state.status == 'warning'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
+                <i class="fa fa-ban text-danger" t-if="state.status != 'valid' and state.status != 'warning'" style="font-size: 1.2rem; padding: 0 10px; line-height: 46px;"></i>
+                
+                <!-- Badge for warning days remaining -->
+                <span class="badge rounded-pill bg-danger text-white position-absolute p-1" t-if="state.status == 'warning' and state.days >= 0" style="font-size: 0.6rem; top: 5px; right: 2px; min-width: 15px; height: 15px; display: flex; align-items: center; justify-content: center; border: 1px solid white;">
+                    <t t-esc="state.days"/>
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 300px;">
-                <h5 class="dropdown-header text-uppercase text-danger fw-bold" t-if="state.status != 'warning'">License Expired</h5>
-                <h5 class="dropdown-header text-uppercase text-warning fw-bold" t-if="state.status == 'warning'">License Warning</h5>
-                <div class="p-2">
-                    <p class="mb-2 text-wrap"><t t-esc="state.message"/></p>
-                    <div class="alert alert-info small mb-0">
-                        Please contact your administrator to renew or activate the license.
+            
+            <div class="dropdown-menu dropdown-menu-end p-3" style="min-width: 320px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <!-- Dropdown for Valid License -->
+                <t t-if="state.status == 'valid'">
+                    <h5 class="dropdown-header text-uppercase text-success fw-bold d-flex align-items-center gap-2 mb-2 p-0" style="font-size: 0.85rem; border: none;">
+                        <i class="fa fa-shield" style="font-size: 1rem;"></i> License Active
+                    </h5>
+                    <hr class="my-2"/>
+                    <div class="p-1">
+                        <p class="mb-2 text-wrap" style="font-size: 0.9rem; color: #4b5563;"><t t-esc="state.message"/></p>
+                        <div class="small text-muted mb-3" t-if="state.expiration_date">
+                            <i class="fa fa-calendar me-1"></i> Valid until: <strong class="text-dark"><t t-esc="state.expiration_date"/></strong>
+                        </div>
+                        <div class="alert alert-success small mb-0 py-2 px-3 border-0 d-flex align-items-start gap-2" style="background-color: rgba(25, 135, 84, 0.1); color: #198754; border-radius: 6px;">
+                            <i class="fa fa-check-circle mt-1" style="font-size: 0.95rem;"></i>
+                            <div>
+                                Database licensed and protected by <strong style="color: #0f5132;">DIGITALUB</strong>.
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </t>
+
+                <!-- Dropdown for Warning License -->
+                <t t-if="state.status == 'warning'">
+                    <h5 class="dropdown-header text-uppercase text-warning fw-bold d-flex align-items-center gap-2 mb-2 p-0" style="font-size: 0.85rem; border: none;">
+                        <i class="fa fa-exclamation-triangle" style="font-size: 1rem;"></i> Warning: License Expiring Soon
+                    </h5>
+                    <hr class="my-2"/>
+                    <div class="p-1">
+                        <p class="mb-2 text-wrap fw-semibold text-warning" style="font-size: 0.9rem;"><t t-esc="state.message"/></p>
+                        <div class="small text-muted mb-3" t-if="state.expiration_date">
+                            <i class="fa fa-calendar me-1"></i> Expires on: <strong class="text-dark"><t t-esc="state.expiration_date"/></strong> (<t t-esc="state.days"/> days remaining)
+                        </div>
+                        <div class="alert alert-warning small mb-0 py-2 px-3 border-0 d-flex align-items-start gap-2" style="background-color: rgba(255, 193, 7, 0.1); color: #664d03; border-radius: 6px;">
+                            <i class="fa fa-exclamation-circle mt-1" style="font-size: 0.95rem;"></i>
+                            <div>
+                                Please contact <strong style="color: #664d03;">DIGITALUB</strong> support to renew and avoid service interruption.
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <!-- Dropdown for Expired/Invalid License -->
+                <t t-if="state.status != 'valid' and state.status != 'warning'">
+                    <h5 class="dropdown-header text-uppercase text-danger fw-bold d-flex align-items-center gap-2 mb-2 p-0" style="font-size: 0.85rem; border: none;">
+                        <i class="fa fa-ban" style="font-size: 1rem;"></i> License Expired / Invalid
+                    </h5>
+                    <hr class="my-2"/>
+                    <div class="p-1">
+                        <p class="mb-2 text-wrap text-danger fw-semibold" style="font-size: 0.9rem;"><t t-esc="state.message"/></p>
+                        <div class="alert alert-danger small mb-0 py-2 px-3 border-0 d-flex align-items-start gap-2" style="background-color: rgba(220, 53, 69, 0.1); color: #842029; border-radius: 6px;">
+                            <i class="fa fa-times-circle mt-1" style="font-size: 0.95rem;"></i>
+                            <div>
+                                Software is operating without a valid license. Please contact <strong style="color: #842029;">DIGITALUB</strong> immediately.
+                            </div>
+                        </div>
+                    </div>
+                </t>
             </div>
         </div>
     </t>
