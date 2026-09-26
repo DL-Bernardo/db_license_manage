@@ -1,0 +1,266 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* db_license_manage
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: suporte@digitalub.ao\n"
+"POT-Creation-Date: 2026-09-26 22:40+0000\n"
+"PO-Revision-Date: 2026-09-26 22:40+0000\n"
+"Last-Translator: Digitalub Angola <suporte@digitalub.ao>\n"
+"Language-Team: French <suporte@digitalub.ao>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_token
+msgid "License Key / Token"
+msgstr "Clé de Licence / Jeton"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__public_key
+msgid "RSA Public Key"
+msgstr "Clé Publique RSA"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__close_on_browser_exit
+msgid "Close Session on Browser Exit"
+msgstr "Fermer la session à la fermeture du navigateur"
+
+#. module: db_license_manage
+#: model:ir.model.fields,help:db_license_manage.field_res_config_settings__close_on_browser_exit
+msgid "Force session termination when the user closes the browser."
+msgstr "Forcer l'expiration de la session lorsque l'utilisateur ferme son navigateur."
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_support_email
+msgid "Support Email (CC)"
+msgstr "Email du Support (CC)"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_company_notification_email
+msgid "Company Email for License Alerts"
+msgstr "Email de l'Entreprise pour Alertes de Licence"
+
+#. module: db_license_manage
+#: model:ir.model.fields,help:db_license_manage.field_res_config_settings__license_company_notification_email
+msgid "Recipient email for automatic license warnings and expiration notices."
+msgstr "Adresse email pour recevoir les avertissements automatiques d'expiration de licence."
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_status_display
+msgid "Status Message"
+msgstr "Message d'État"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_state
+msgid "License State"
+msgstr "État de la Licence"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_expiration_date
+msgid "Valid Until"
+msgstr "Valide Jusqu'au"
+
+#. module: db_license_manage
+#: model:ir.model.fields,field_description:db_license_manage.field_res_config_settings__license_start_date
+msgid "Issued On"
+msgstr "Émise le"
+
+#. module: db_license_manage
+#: model:ir.model.fields.selection,name:db_license_manage.selection__res_config_settings__license_state__valid
+msgid "Valid"
+msgstr "Valide"
+
+#. module: db_license_manage
+#: model:ir.model.fields.selection,name:db_license_manage.selection__res_config_settings__license_state__warning
+msgid "Warning"
+msgstr "Avertissement"
+
+#. module: db_license_manage
+#: model:ir.model.fields.selection,name:db_license_manage.selection__res_config_settings__license_state__expired
+msgid "Expired"
+msgstr "Expirée"
+
+#. module: db_license_manage
+#: model:ir.model.fields.selection,name:db_license_manage.selection__res_config_settings__license_state__invalid
+msgid "Invalid"
+msgstr "Invalide"
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "License not found. Please contact support."
+msgstr "Licence non trouvée. Veuillez contacter le support."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "RSA Public Key is not configured."
+msgstr "La clé publique RSA n'est pas configurée."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "License is invalid for this database UUID."
+msgstr "La licence est invalide pour cet UUID de base de données."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "Warning: Your license will expire in %s days."
+msgstr "Attention : Votre licence expire dans %s jours."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "License Active & Valid"
+msgstr "Licence Active et Valide"
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "Your license has expired. Please contact support."
+msgstr "Votre licence a expiré. Veuillez contacter le support."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "License token is corrupt or invalid."
+msgstr "Le jeton de licence est corrompu ou invalide."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/utils/license_verifier.py:0
+#, python-format
+msgid "License validation error. Please contact support."
+msgstr "Erreur de validation de licence. Veuillez contacter le support."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/models/res_config.py:0
+#, python-format
+msgid "License Email Sent"
+msgstr "Email de Licence Envoyé"
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/models/res_config.py:0
+#, python-format
+msgid "License status email sent successfully to %s (CC: %s)."
+msgstr "Email d'état de licence envoyé avec succès à %s (CC: %s)."
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/models/res_config.py:0
+#, python-format
+msgid "None"
+msgstr "Aucun"
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/models/res_config.py:0
+#, python-format
+msgid "Failed to Send Email"
+msgstr "Échec de l'envoi de l'email"
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/models/res_config.py:0
+#, python-format
+msgid "Could not send license email: %s"
+msgstr "Impossible d'envoyer l'email de licence : %s"
+
+#. module: db_license_manage
+#: code:addons/db_license_manage/models/license_notification.py:0
+#, python-format
+msgid "No recipient email address configured."
+msgstr "Aucune adresse email de destination configurée."
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Licensing"
+msgstr "Licence"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "License Management"
+msgstr "Gestion de Licence"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "License Token"
+msgstr "Jeton de Licence"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Paste the license token provided by your software vendor."
+msgstr "Collez ici le jeton fourni par votre éditeur de logiciel."
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Paste RSA Public Key here..."
+msgstr "Collez la clé publique RSA ici..."
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Valid from: "
+msgstr "Valide du : "
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "to"
+msgstr "au"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Session Control"
+msgstr "Contrôle de Session"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Email Alerts & Notifications"
+msgstr "Alertes et Notifications par Email"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Company Email:"
+msgstr "Email de l'Entreprise :"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "Support Email (CC):"
+msgstr "Email du Support (CC) :"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.res_config_settings_view_form
+msgid "📧 Send License Status Email Now"
+msgstr "📧 Envoyer l'état de la licence maintenant"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.license_expired_page
+msgid "Access Blocked"
+msgstr "Accès Bloqué"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.license_expired_page
+msgid "License Details"
+msgstr "Détails de la Licence"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.license_expired_page
+msgid "Expiration Date:"
+msgstr "Date d'Expiration :"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.license_expired_page
+msgid "Please contact technical support to renew your license and restore access to the system."
+msgstr "Veuillez contacter le support technique pour renouveler votre licence et rétablir l'accès."
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.license_expired_page
+msgid "Return to Login"
+msgstr "Retour à la Connexion"
+
+#. module: db_license_manage
+#: model_terms:ir.ui.view,arch_db:db_license_manage.login_layout_license_footer
+msgid "Software protected by Digitalub Angola."
+msgstr "Logiciel protégé par Digitalub Angola."
