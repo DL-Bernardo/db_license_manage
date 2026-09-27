@@ -49,6 +49,8 @@ def verify_license(token, current_db_uuid, env=None, public_key_override=None):
     if not token:
         return LicenseStatus.INVALID, _("License not found. Please contact support."), None, None
 
+    token = "".join(str(token).split())
+
     public_key = public_key_override or get_public_key(env)
     if not public_key:
         return LicenseStatus.INVALID, _("RSA Public Key is not configured."), None, None
