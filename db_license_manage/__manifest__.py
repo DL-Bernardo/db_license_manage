@@ -40,5 +40,6 @@
         'static/description/06_active_license_systray.png',
         'static/description/07_login_active_license.png',
         'static/description/08_anti_copy_protection.png',
+        'static/description/09_odoo19_login_protection.png',
     ],
 }
