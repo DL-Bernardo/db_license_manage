@@ -32,14 +32,13 @@
     'currency': 'USD',
     'images': [
         'static/description/banner.png',
-        'static/description/01_login_license_status.png',
-        'static/description/02_user_login_blocked.png',
-        'static/description/03_license_expired_systray.png',
+        'static/description/01_odoo19_login_active_license.png',
+        'static/description/02_odoo19_active_systray_settings.png',
+        'static/description/03_odoo19_login_missing_license.png',
         'static/description/04_license_configuration.png',
         'static/description/05_active_valid_license.png',
         'static/description/06_active_license_systray.png',
         'static/description/07_login_active_license.png',
         'static/description/08_anti_copy_protection.png',
-        'static/description/09_odoo19_login_protection.png',
     ],
 }
