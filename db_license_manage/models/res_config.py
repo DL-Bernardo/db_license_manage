@@ -24,7 +24,8 @@ class ResConfigSettings(models.TransientModel):
     def set_values(self):
         super(ResConfigSettings, self).set_values()
         self.env['ir.config_parameter'].sudo().set_param('db_license_manager.public_key', self.public_key or '')
-        self.env['ir.config_parameter'].sudo().set_param('db_license_manager.token', self.license_token or '')
+        cleaned_token = "".join((self.license_token or '').split())
+        self.env['ir.config_parameter'].sudo().set_param('db_license_manager.token', cleaned_token)
         self.env['ir.config_parameter'].sudo().set_param('db_license_manager.close_on_browser_exit', str(bool(self.close_on_browser_exit)))
         self.env['ir.config_parameter'].sudo().set_param('db_license_manager.support_email', self.license_support_email or '')
         self.env['ir.config_parameter'].sudo().set_param('db_license_manager.company_notification_email', self.license_company_notification_email or '')
