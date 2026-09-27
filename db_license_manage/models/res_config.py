@@ -99,8 +99,8 @@ class ResConfigSettings(models.TransientModel):
 
 # Monkeypatch odoo.http.get_session_max_inactivity to support expiration upon closing browser
 import odoo.http
-if hasattr(odoo.http, 'get_session_max_inactivity'):
-    original_get_session_max_inactivity = odoo.http.get_session_max_inactivity
+if hasattr(odoo.http, 'get_session_max_inactivity') and not hasattr(odoo.http, '_digitalub_orig_get_session_max_inactivity'):
+    odoo.http._digitalub_orig_get_session_max_inactivity = odoo.http.get_session_max_inactivity
 
     def custom_get_session_max_inactivity(env):
         if env:
@@ -110,6 +110,6 @@ if hasattr(odoo.http, 'get_session_max_inactivity'):
                     return None  # None sets cookie without max-age (expires on browser exit)
             except Exception:
                 pass
-        return original_get_session_max_inactivity(env)
+        return odoo.http._digitalub_orig_get_session_max_inactivity(env)
 
     odoo.http.get_session_max_inactivity = custom_get_session_max_inactivity
