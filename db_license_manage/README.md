@@ -3,7 +3,7 @@
 **Vendor:** DIGITALUB ANGOLA  
 **Support:** `suporte@digitalub.ao`  
 **License:** OPL-1 (Commercial)  
-**Supported Odoo Versions:** 17.0, 18.0, 19.0 (Community & Enterprise)
+**Supported Odoo Versions:** 17.0, 18.0, 19.0, 20.0 (Community & Enterprise)
 
 ---
 
