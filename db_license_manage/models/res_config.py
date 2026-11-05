@@ -3,6 +3,22 @@ from odoo import models, fields, api, _
 from ..utils.license_verifier import verify_license, LicenseStatus
 
 
+class IrConfigParameter(models.Model):
+    _inherit = 'ir.config_parameter'
+
+    @api.model
+    def get_param(self, key, default=False):
+        if hasattr(super(), 'get_param'):
+            return super().get_param(key, default=default)
+        return self.get_str(key, default=default)
+
+    @api.model
+    def set_param(self, key, value):
+        if hasattr(super(), 'set_param'):
+            return super().set_param(key, value)
+        return self.set_str(key, value)
+
+
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
