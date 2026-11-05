@@ -1,11 +1,16 @@
 /** @odoo-module **/
 import { registry } from "@web/core/registry";
 import { rpc } from "@web/core/network/rpc";
-import { Component, onWillStart, useState } from "@odoo/owl";
+import * as owl from "@odoo/owl";
+
+const { Component, onWillStart } = owl;
+const useReactiveState = owl.proxy || owl.useState;
 
 export class LicenseSystray extends Component {
+    static template = "db_license_manage.LicenseSystray";
+
     setup() {
-        this.state = useState({
+        this.state = useReactiveState({
             show: false,
             status: "valid",
             message: "",
@@ -27,7 +32,6 @@ export class LicenseSystray extends Component {
         });
     }
 }
-LicenseSystray.template = "db_license_manage.LicenseSystray";
 
 export const systrayItem = {
     Component: LicenseSystray,
