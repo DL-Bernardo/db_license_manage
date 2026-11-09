@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="license_expired_page" name="License Expired">
+        <t t-call="web.login_layout">
+            <div class="text-center p-4">
+                <div class="mb-4">
+                    <i class="fa fa-ban text-danger" style="font-size: 5rem;"></i>
+                </div>
+                <h2 class="text-danger fw-bold mb-3">Access Blocked</h2>
+                <div class="alert alert-danger mb-4 shadow-sm">
+                    <p class="mb-0" style="font-size: 1.1rem;">
+                        <t t-esc="message or 'Your license has expired or is invalid.'"/>
+                    </p>
+                </div>
+                
+                <div class="card bg-light border-0 mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-muted small text-uppercase fw-bold">License Details</h5>
+                        <p class="card-text">
+                            <strong>Status:</strong> <span class="badge rounded-pill bg-danger">Expired</span><br/>
+                            <t t-if="expiry_date">
+                                <strong>Expiration Date:</strong> <t t-esc="expiry_date"/>
+                            </t>
+                        </p>
+                    </div>
+                </div>
+
+                <p class="text-muted mb-4">
+                    Please contact technical support to renew your license and restore access to the system.
+                </p>
+
+                <div class="d-grid gap-2">
+                    <a href="/web/login" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="fa fa-arrow-left me-2"></i> Return to Login
+                    </a>
+                </div>
+
+                <div class="mt-4 text-muted small">
+                    Software protected by <strong>Digitalub Angola</strong>.
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

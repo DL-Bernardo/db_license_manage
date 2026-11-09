@@ -1,99 +1,155 @@
-# Odoo Database License Manager (v17)
+# Database License & Anti-Copy Protection Manager
 
-The **Database License Manager** is an advanced security module for Odoo 17, designed to protect intellectual property and control the software's usage period.
-
-Unlike simple solutions based on text dates, this module uses **Asymmetric Cryptography (RSA) and JWT (JSON Web Tokens)** to ensure that the license cannot be forged, altered, or cloned for other databases.
-
-## 🚀 Key Features
-
-### 🔒 Security and Control
-*   **Expiration Date Lock:** Prevents users from logging in after the defined expiration date.
-*   **UUID Binding (Anti-Copy):** The license is generated specifically for the client's database UUID. If the database is restored on another server, the license automatically becomes invalid.
-*   **RSA 2048-bit Security:** Uses a private key (held by the provider) to sign licenses and a public key (configured in the module) for validation.
-*   **Admin Bypass (Fail-Safe):** Administrators (ID 1, ID 2, and Superusers) maintain access to the system even with an expired license, allowing token renewal via the interface.
-
-### ⚠️ Warning and Notification System (New)
-*   **Login Warning (Grace Period):** 5 days before expiration, users see a warning banner on the login screen.
-    *   Login is **not blocked** during this period.
-    *   A **"Continue to System"** button allows normal access.
-    *   "Premium" look with gradients (Orange for warning, Red for critical).
-*   **Persistent Notification (Systray):** An alert icon at the top of the screen (backend) displays a countdown of the remaining days.
-*   **Automatic Emails:** The system sends automatic emails to administrators when the license is about to expire.
-    *   **Schedule:** 15, 7, 5, 3, 1, and 0 days before expiration.
-    *   **Template:** Formatted HTML email with alert colors.
-
-### ⚙️ Management Interface
-*   **Dynamic Configuration:** The public key and token are configured directly in *Settings > Licensing*.
-*   **Visual Status:** Colored badges (Valid, Warning, Expired) for easy identification of the license status.
-*   **Real-time Validation:** When pasting the token, the system immediately displays the validity dates.
+**Vendor:** DIGITALUB ANGOLA  
+**Support:** `suporte@digitalub.ao`  
+**License:** OPL-1 (Commercial)  
+**Supported Odoo Versions:** 16.0, 16.0, 17.0, 18.0, 19.0, 20.0, 20.0 (Community & Enterprise)
 
 ---
 
-## 🛠️ Technical Prerequisites
+## 📌 Overview
 
-This module depends on standard Python cryptography libraries. Make sure they are installed in the Odoo server environment:
+The **Database License & Anti-Copy Protection Manager** provides enterprise-grade cryptographic software licensing and anti-piracy protection for proprietary Odoo modules, client customizations, and recurring SaaS contracts.
+
+### Key Capabilities:
+- **RSA-2048 Asymmetric Signatures:** Tamper-proof token validation using industry-standard RS256 cryptography with zero external server dependencies (100% offline verification).
+- **UUID Anti-Copy Protection:** Cryptographically binds each license to the target database UUID. Restoring or cloning the database onto another server invalidates the license immediately.
+- **Session Control:** Force automatic user session termination when the browser is closed.
+- **Automated Email Alerts:** Proactive warning emails sent to company administrators and support at milestones: 30, 15, 7, 5, 3, 2, 1, and 0 days prior to expiration.
+- **Pre-Login & Systray Monitoring:** Live 3-state shield widget in the Systray and pre-login banner and status badge on the authentication screen.
+- **Real-Time Lockout:** Blocks non-admin access upon license expiration or tampering, while granting administrators persistent bypass to renew licenses.
+- **Multi-Language (i18n):** Native support for English, French, Portuguese (PT & BR), and Spanish.
+
+---
+
+## 🔐 Cryptographic Architecture
+
+1. **Private Key (`private_key.pem`):** Kept strictly confidential by the software vendor (Digitalub). Used only to sign new license tokens. Never shared or installed on client servers.
+2. **Public Key (`public_key.pem`):** Configured in the client's Odoo Settings (`Settings > Licensing`). Used by the module to verify that tokens were issued by Digitalub.
+3. **License Token (JWT):** A signed string containing the client name, database UUID, and expiration timestamp.
+
+---
+
+## 🚀 How to Generate License Tokens
+
+### Step 1: Initialize Local License Tools (One-Time Setup)
+
+Inside the repository root or module folder, run the setup script to initialize your local RSA keys and generator tool in `~/license_tools`:
 
 ```bash
-pip install pyjwt cryptography
+python3 tools/setup_license_tools.py
+```
+
+This creates:
+- `~/license_tools/private_key.pem` (Permissions: 600)
+- `~/license_tools/public_key.pem`
+- `~/license_tools/generate_license.py`
+
+---
+
+### Step 2: Obtain the Client Database UUID
+
+Ask the client for their database UUID, or locate it in their Odoo instance:
+- **Via UI:** In Developer Mode, go to **Settings > Technical > Parameters > System Parameters** and look for `database.uuid`.
+- **Via Pre-Login / Settings:** The license configuration screen in **Settings > Licensing** displays the status and UUID.
+
+---
+
+### Step 3: Generate the License Token
+
+#### Option A: Command Line Generator
+```bash
+python3 ~/license_tools/generate_license.py --client "CLIENT NAME" --uuid "DATABASE_UUID" --days 365
+```
+
+**Example:**
+```bash
+python3 ~/license_tools/generate_license.py --client "KING PEDZIO" --uuid "d22df021-ba05-11f1-81a4-00155d4b9e22" --days 365
+```
+
+#### Option B: Interactive Mode
+```bash
+python3 ~/license_tools/generate_license.py
+```
+You will be prompted to enter the Client Name, Database UUID, and Validity in days.
+
+#### Option C: One-Click Copy to Windows Clipboard (WSL2)
+To copy the clean token directly to your Windows clipboard with zero spaces, run:
+```bash
+python3 -c "import sys; sys.path.append('/home/bvieira/license_tools'); from generate_license import create_token; t, _, _ = create_token('CLIENT NAME', 'DATABASE_UUID', 365); print(t.strip(), end='')" | clip.exe
+```
+Then simply press `Ctrl + V` in the browser.
+
+---
+
+## 🛠️ How to Activate the License in Odoo
+
+1. Log in to the client Odoo instance as **Administrator** (`admin`).
+2. Navigate to **Settings > Licensing** (Definições > Licenciamento).
+3. Ensure the **RSA Public Key** field contains the official Digitalub public key.
+4. Paste the generated **License Token** into the **License Key / Token** field.
+5. Click **Save**.
+6. The license status badge will immediately turn green (**Valid**) showing the expiration date.
+
+> **Note:** The module automatically sanitizes token input by stripping extra spaces, newlines, or carriage returns caused by copying from email or chat clients.
+
+---
+
+## 💡 Running Odoo in Background (Preventing Server Shutdowns)
+
+When testing Odoo in the terminal, running `python3 odoo-bin ...` executes in the **foreground**. If you press `Ctrl + C` or close the terminal window, the Odoo server will stop.
+
+To keep Odoo running continuously in the background on your development machine:
+
+### Using `nohup`:
+```bash
+nohup python3 odoo19/odoo-bin --addons-path=odoo19/addons,custom_repo -d odoo19_teste --http-port=8070 > odoo19.log 2>&1 &
+```
+
+### Or using `tmux` / `screen`:
+```bash
+tmux new -s odoo19
+python3 odoo19/odoo-bin --addons-path=odoo19/addons,custom_repo -d odoo19_teste --http-port=8070
+# Press Ctrl+B then D to detach and leave it running
 ```
 
 ---
 
-## ⚙️ Installation and Configuration (Client)
+## 📁 Module File Structure
 
-### 1. Installation
-1.  Place the `db_license_manager` folder in the `custom_addons` directory.
-2.  Update the applications list and install the module.
-    *   *Note:* The module will automatically install the `web`, `website`, `auth_signup`, and `mail` dependencies if necessary.
-
-### 2. Initial Configuration (Required)
-As soon as the module is installed, **no user will be able to log in** (except Admin) until the Public Key is configured.
-
-1.  Log in with an Administrator account.
-2.  Go to **Settings > Licensing**.
-3.  In the **"RSA Public Key"** field, paste the content of your `public_key.pem` file.
-4.  Save the settings.
-
-### 3. Insert the License
-1.  Still in **Settings > Licensing**.
-2.  In the **"License Token"** field, paste the string provided by your software provider.
-3.  The system will immediately validate the signature and show:
-    *   License Status (Colored Badge)
-    *   Start Date (Valid from...)
-    *   End Date (...to)
-
-## 🛡️ Security Flow
-
-1.  **Login Attempt:** The user enters their credentials.
-2.  **User Verification:** Odoo validates the password.
-3.  **Interception:** The module checks if the user is an Admin.
-    *   **If YES:** Access granted.
-    *   **If NO:** The module reads the License Token and the Public Key from the system.
-4.  **Token Validation:**
-    *   Is the RSA signature valid?
-    *   Does the UUID match?
-    *   **WARNING Status (<= 5 days):** Displays a warning on the login screen, but allows continuing.
-    *   **EXPIRED/INVALID Status:** Blocks login and displays an error.
-5.  **Notifications:**
-    *   Daily cron job checks the validity and sends emails to the `base.group_system` group.
-
----
-
-## ⚠️ Troubleshooting
-
-*   **The client restored a backup and was blocked:**
-    When restoring a backup on a new instance, the database UUID changes. The client must request a new license by providing the new UUID.
-
-*   **I can't log in to renew the license:**
-    Log in with the original Administrator account (usually `admin` or ID 2). These accounts are immune to the block.
-
-*   **Error "Uncaught Promise > license_token field is undefined":**
-    Make sure to restart the Odoo server after updating the module. This error occurs when there is a desynchronization between the Python model and the JS View.
-
-*   **Emails are not arriving:**
-    Check if the outgoing mail server (SMTP) is configured in *Settings > Technical > Email Servers*. Also, check if the "License Manager: Check Expiration" Scheduled Action is active.
-
----
-
-**Developed by:** [DIGITALUB - ANGOLA]
-**License:** OPL-1 (Digitalub Proprietary License)
+```text
+db_license_manage/
+├── __init__.py
+├── __manifest__.py
+├── README.md
+├── controllers/
+│   ├── __init__.py
+│   ├── main.py              # Login interceptor & /license/expired handler
+│   └── systray.py           # Owl 2 JSON-RPC systray status endpoint
+├── data/
+│   ├── ir_cron_data.xml     # Daily automated expiration check cron
+│   └── mail_template_data.xml# License expiration warning email template
+├── i18n/
+│   ├── db_license_manage.pot# Master translation template
+│   ├── en.po                # English
+│   ├── fr.po                # French
+│   ├── pt.po                # Portuguese (Portugal)
+│   ├── pt_BR.po             # Portuguese (Brazil)
+│   └── es.po                # Spanish
+├── models/
+│   ├── __init__.py
+│   ├── ir_http.py           # Real-time non-admin session enforcement
+│   ├── license_notification.py# Automated email dispatch logic
+│   └── res_config.py        # Settings view & session cookie configuration
+├── static/
+│   ├── description/         # Store banner, screenshots & index.html
+│   └── src/
+│       ├── css/login.css
+│       ├── js/systray_license.js
+│       └── xml/systray_license.xml
+├── tools/
+│   └── setup_license_tools.py# RSA key initialization & generator setup
+└── utils/
+    ├── __init__.py
+    └── license_verifier.py  # RS256 token verification & UUID validation
+```
