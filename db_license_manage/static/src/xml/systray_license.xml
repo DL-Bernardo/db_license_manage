@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-name="db_license_manage.LicenseSystray">
+    <t t-name="db_license_manage.LicenseSystray" owl="1">
         <div class="o_systray_item" t-att-title="state.message" t-att-class="{ 'd-none': !state.show }">
             <a class="dropdown-toggle o-no-caret d-flex align-items-center position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="height: 100%;">
                 <!-- Icon based on status -->
