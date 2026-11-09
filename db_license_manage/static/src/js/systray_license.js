@@ -8,20 +8,20 @@ export class LicenseSystray extends Component {
         this.rpc = useService("rpc");
         this.state = useState({
             show: false,
-            status: 'valid',
-            message: '',
-            days: 0
+            status: "valid",
+            message: "",
+            days: 0,
+            expiration_date: "",
         });
 
         onWillStart(async () => {
             try {
                 const result = await this.rpc("/db_license_manage/status");
-                if (result.show_warning) {
-                    this.state.show = true;
-                    this.state.status = result.status;
-                    this.state.message = result.message;
-                    this.state.days = result.days_remaining;
-                }
+                this.state.show = true;
+                this.state.status = result.status;
+                this.state.message = result.message;
+                this.state.days = result.days_remaining;
+                this.state.expiration_date = result.expiration_date;
             } catch (e) {
                 console.error("Failed to fetch license status", e);
             }

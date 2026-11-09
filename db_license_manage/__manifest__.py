@@ -1,8 +1,8 @@
 {
     'name': 'Database License & Anti-Copy Protection Manager',
-    'version': '17.0.1.0.7',
+    'version': '16.0.1.0.0',
     'category': 'Tools',
-    'summary': 'Software License Management with UUID Locking, Anti-Copy Protection & Secure Expiration Controls',
+    'summary': 'Software License Management with UUID Locking, Anti-Copy Protection, Session Control & Email Alerts',
     'author': 'DIGITALUB ANGOLA',
     'depends': ['base', 'web', 'auth_signup', 'mail'],
     'external_dependencies': {
@@ -14,6 +14,7 @@
         'views/res_config_settings_views.xml',
         'views/login_templates.xml',
         'views/login_warning.xml',
+        'views/license_expired_templates.xml',
     ],
     'assets': {
         'web.assets_frontend': [
@@ -31,11 +32,13 @@
     'currency': 'USD',
     'images': [
         'static/description/banner.png',
-        'static/description/01.licenca_nao_encontrada.png',
-        'static/description/02.configurar_licenca.png',
-        'static/description/03.licenca_valida.png',
-        'static/description/04.Aviso_5_dias_licenca1.png',
-        'static/description/05.Aviso_5_dias_licenca.png',
-        'static/description/06.Licenca_expirada.png',
+        'static/description/01_odoo19_login_active_license.png',
+        'static/description/02_odoo19_active_systray_settings.png',
+        'static/description/03_odoo19_login_missing_license.png',
+        'static/description/04_license_configuration.png',
+        'static/description/05_active_valid_license.png',
+        'static/description/06_active_license_systray.png',
+        'static/description/07_login_active_license.png',
+        'static/description/08_anti_copy_protection.png',
     ],
 }
